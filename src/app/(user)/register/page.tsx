@@ -1,7 +1,10 @@
+import RegistrationForm from "./RegistrationForm";
 
 function RegistrationPage() {
     return (
-        <div>Registration Page</div>
+        <section>
+            <RegistrationForm />
+        </section>
     )
 }
 
