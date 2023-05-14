@@ -23,7 +23,9 @@ module.exports = {
         //cta-hover: hover color for call-to-action-buttons
         ["cta-hover"]: "#3AC3A3",
         //edges: a very light grey for borders and dividers
-        edges: "#F8F8F8"
+        edges: "#F8F8F8",
+        //error: all purpose color for indicating error state
+        error: "#8B0000",
       },
       minWidth: {
         'btn-sm': "5rem"
