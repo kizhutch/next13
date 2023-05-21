@@ -16,7 +16,8 @@ export default function RegistrationForm() {
     const {
         register, 
         formState: {errors}, 
-        handleSubmit
+        handleSubmit,
+        watch,
     } = useForm<FormData>();
    
     const handleFormSubmit = (e) => {
@@ -35,15 +36,14 @@ export default function RegistrationForm() {
         css: {
             label: "block text-gray-700 text-sm font-bold mb-2",
             input: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline",
-            error: "block text-sm font-bold text-error my-2"
+            error: "block text-sm font-bold text-error my-2 h-5"
         },
         regex: {
             nameValidation: /^[A-Za-z]+(?:\s[A-Za-z]+)*$/,
-            passwordValidation: /^[a-zA-Z0-9!#%&^?]+$/,
+            passwordValidation: /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!#%&^?])[a-zA-Z0-9!#%&^?]+$/,
             emailValidation: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
         }
     }
-
 
     return (
         <form className="bg-secondary max-w-md p-5" onSubmit={handleSubmit(handleFormSubmit)} noValidate>
@@ -64,7 +64,7 @@ export default function RegistrationForm() {
                     }
                 })} 
             />
-            {errors.firstName && <p className={formAttributes.css.error}>{errors.firstName.message}</p>}
+            <p className={`${formAttributes.css.error} ${errors.firstName ? "visible" : "invisible"}`}>{errors.firstName && errors.firstName.message}</p>
             
             <label className={formAttributes.css.label} htmlFor={formAttributes.id.lastName}>Last Name</label>
             <input 
@@ -83,7 +83,7 @@ export default function RegistrationForm() {
                 }
               })} 
             />
-            {errors.lastName && <p className={formAttributes.css.error}>{errors.lastName.message}</p>}
+            <p className={`${formAttributes.css.error} ${errors.lastName ? "visible" : "invisible"}`}>{errors.lastName && errors.lastName.message}</p>
 
             <label className={formAttributes.css.label} htmlFor={formAttributes.id.email}>Email</label>
             <input 
@@ -103,15 +103,50 @@ export default function RegistrationForm() {
             }
               )}
              />
-            {errors.email && <p className={formAttributes.css.error}>{errors.email.message}</p> }
+            <p className={`${formAttributes.css.error} ${errors.email ? "visible" : "invisible"}`}>{errors.email && errors.email.message}</p>
 
             <label className={formAttributes.css.label} htmlFor={formAttributes.id.password}>Password</label>
-            <input className={formAttributes.css.input} id={formAttributes.id.password} type="password" />
-            <p className={formAttributes.css.error}>Silly sample error</p>
+            <input 
+              className={formAttributes.css.input} 
+              id={formAttributes.id.password} 
+              type="password"
+              placeholder="Password"
+              {...register("password", {
+                required: {
+                    value: true,
+                    message: "Please enter a password"
+                },
+                pattern: {
+                    value: formAttributes.regex.passwordValidation,
+                    message: "Please enter a valid password"
+                },
+                minLength: {
+                    value: 10,
+                    message: "Password must be at least 10 characters"
+                }
+              })}
+            />
+            <p className={`${formAttributes.css.error} ${errors.password ? "visible" : "invisible"}`}>{errors?.password && errors.password.message}</p>
 
             <label className={formAttributes.css.label} htmlFor={formAttributes.id.pwordCon}>Confirm Password</label>
-            <input className={formAttributes.css.input} id={formAttributes.id.pwordCon} type="password" />
-            <p className={formAttributes.css.error}>Silly sample error</p>
+            <input 
+              className={formAttributes.css.input} 
+              id={formAttributes.id.pwordCon} 
+              type="password" 
+              placeholder="Confirm password"
+              {...register("pwordCon", {
+                required: {
+                    value: true,
+                    message: "Please confirm your password"
+                },
+                validate: (pword: string) => {
+                    if (watch("password") !== pword) {
+                        return "Your passwords must match"
+                    }
+                }
+              })}
+            />
+            <p className={`${formAttributes.css.error} ${errors.pwordCon ? "visible" : "invisible"}`}>{errors.pwordCon && errors.pwordCon.message}</p>
             
             <Button label="Register"  type="submit" width="w-full"/>
         </form>
