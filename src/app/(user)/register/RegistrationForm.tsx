@@ -67,8 +67,23 @@ export default function RegistrationForm() {
             {errors.firstName && <p className={formAttributes.css.error}>{errors.firstName.message}</p>}
             
             <label className={formAttributes.css.label} htmlFor={formAttributes.id.lastName}>Last Name</label>
-            <input className={formAttributes.css.input} id={formAttributes.id.lastName} type="text" />
-            <p className={formAttributes.css.error}>Silly sample error</p>
+            <input 
+              className={formAttributes.css.input} 
+              id={formAttributes.id.lastName} 
+              type="text"
+              placeholder="Last Name"
+              {...register("lastName", {
+                required: {
+                    value: true,
+                    message: "A last name is required"
+                },
+                pattern: {
+                    value: formAttributes.regex.nameValidation,
+                    message: "Your last name must only contain letters"
+                }
+              })} 
+            />
+            {errors.lastName && <p className={formAttributes.css.error}>{errors.lastName.message}</p>}
 
             <label className={formAttributes.css.label} htmlFor={formAttributes.id.email}>Email</label>
             <input className={formAttributes.css.input} id={formAttributes.id.email} type="email" />
