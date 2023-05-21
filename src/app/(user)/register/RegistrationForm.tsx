@@ -40,13 +40,13 @@ export default function RegistrationForm() {
         regex: {
             nameValidation: /^[A-Za-z]+(?:\s[A-Za-z]+)*$/,
             passwordValidation: /^[a-zA-Z0-9!#%&^?]+$/,
-            emailValidation: ""
+            emailValidation: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
         }
     }
 
 
     return (
-        <form className="bg-secondary max-w-md p-5" onSubmit={handleSubmit(handleFormSubmit)}>
+        <form className="bg-secondary max-w-md p-5" onSubmit={handleSubmit(handleFormSubmit)} noValidate>
             <label className={formAttributes.css.label} htmlFor={formAttributes.id.firstName}>First Name</label>
             <input 
                 className={formAttributes.css.input} 
@@ -86,8 +86,24 @@ export default function RegistrationForm() {
             {errors.lastName && <p className={formAttributes.css.error}>{errors.lastName.message}</p>}
 
             <label className={formAttributes.css.label} htmlFor={formAttributes.id.email}>Email</label>
-            <input className={formAttributes.css.input} id={formAttributes.id.email} type="email" />
-            <p className={formAttributes.css.error}>Silly sample error</p>
+            <input 
+              className={formAttributes.css.input}
+              id={formAttributes.id.email}
+              type="email"
+              placeholder="Email"
+              {...register("email", {
+                required: {
+                    value: true,
+                    message: "Please enter a valid email address"
+                },
+                pattern: {
+                    value: formAttributes.regex.emailValidation,
+                    message: "Please ensure you are entering a valid email address"
+                }
+            }
+              )}
+             />
+            {errors.email && <p className={formAttributes.css.error}>{errors.email.message}</p> }
 
             <label className={formAttributes.css.label} htmlFor={formAttributes.id.password}>Password</label>
             <input className={formAttributes.css.input} id={formAttributes.id.password} type="password" />
