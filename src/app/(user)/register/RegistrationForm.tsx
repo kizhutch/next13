@@ -2,6 +2,8 @@
 
 import { useForm } from "react-hook-form"
 import Button from "@/components/buttons/Button"
+import TextToggleButton from "@/components/buttons/TextToggleButton";
+import { FormEvent } from "react";
 
 type FormData = {
     firstName: string,
@@ -126,6 +128,7 @@ export default function RegistrationForm() {
                 }
               })}
             />
+            <TextToggleButton label="Show Password"/>
             <p className={`${formAttributes.css.error} ${errors.password ? "visible" : "invisible"}`}>{errors?.password && errors.password.message}</p>
 
             <label className={formAttributes.css.label} htmlFor={formAttributes.id.pwordCon}>Confirm Password</label>
