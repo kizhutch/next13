@@ -5,12 +5,12 @@ import { useState } from "react";
 
 const TextLabelButton = ({
     className = "",
-    onClick,
+    callback,
     type = "button",
     width = ""
 } : {
     className?: string,
-    onClick?: React.MouseEventHandler<HTMLButtonElement>,
+    callback?: Function,
     type?: React.ButtonHTMLAttributes<HTMLButtonElement>['type'],
     width?: string
 }) => {
@@ -19,7 +19,7 @@ const TextLabelButton = ({
 
     const handleClick = (e) => {
         setIsToggled(!isToggled);
-        onClick && onClick(e);
+        callback && callback(e);
     }
 
     return (

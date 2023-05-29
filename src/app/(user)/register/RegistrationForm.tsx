@@ -3,7 +3,7 @@
 import { useForm } from "react-hook-form"
 import Button from "@/components/buttons/Button"
 import TextToggleButton from "@/components/buttons/TextToggleButton";
-import { FormEvent } from "react";
+import { useState } from "react";
 
 type FormData = {
     firstName: string,
@@ -21,6 +21,12 @@ export default function RegistrationForm() {
         handleSubmit,
         watch,
     } = useForm<FormData>();
+
+    const [showPassword, setShowPassword] = useState(false);
+    const [showPassConfirm, setShowPassConfirm] = useState(false);
+
+    const showPasswordHandleClick = () => setShowPassword(!showPassword);
+    const showPassConfirmHandleClick = () => setShowPassConfirm(!showPassConfirm)
    
     const handleFormSubmit = (e) => {
         e.prevent.default();
@@ -114,7 +120,7 @@ export default function RegistrationForm() {
                 <input 
                     className={formAttributes.css.input} 
                     id={formAttributes.id.password} 
-                    type="password"
+                    type={showPassword ? "text" : "password"}
                     placeholder="Password"
                     {...register("password", {
                         required: {
@@ -131,30 +137,31 @@ export default function RegistrationForm() {
                         }
                     })}
                 />
-                <TextToggleButton className={formAttributes.css.showHideBtn} /> 
+                <TextToggleButton callback={showPasswordHandleClick} className={formAttributes.css.showHideBtn} /> 
             </div>
-           
             <p className={`${formAttributes.css.error} ${errors.password ? "visible" : "invisible"}`}>{errors?.password && errors.password.message}</p>
 
-
             <label className={formAttributes.css.label} htmlFor={formAttributes.id.pwordCon}>Confirm Password</label>
-            <input 
-              className={formAttributes.css.input} 
-              id={formAttributes.id.pwordCon} 
-              type="password" 
-              placeholder="Confirm password"
-              {...register("pwordCon", {
-                required: {
-                    value: true,
-                    message: "Please confirm your password"
-                },
-                validate: (pword: string) => {
-                    if (watch("password") !== pword) {
-                        return "Your passwords must match"
-                    }
-                }
-              })}
-            />
+            <div className={formAttributes.css.passwordContainer}>
+                <input 
+                    className={formAttributes.css.input} 
+                    id={formAttributes.id.pwordCon} 
+                    type={showPassConfirm ? "text" : "password"}
+                    placeholder="Confirm password"
+                    {...register("pwordCon", {
+                        required: {
+                            value: true,
+                            message: "Please confirm your password"
+                        },
+                        validate: (pword: string) => {
+                            if (watch("password") !== pword) {
+                                return "Your passwords must match"
+                            }
+                        }
+                    })}
+                />
+                <TextToggleButton callback={showPassConfirmHandleClick} className={formAttributes.css.showHideBtn} /> 
+            </div>
             <p className={`${formAttributes.css.error} ${errors.pwordCon ? "visible" : "invisible"}`}>{errors.pwordCon && errors.pwordCon.message}</p>
             
             <Button label="Register"  type="submit" width="w-full"/>
