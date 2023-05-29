@@ -38,7 +38,9 @@ export default function RegistrationForm() {
         css: {
             label: "block text-gray-700 text-sm font-bold mb-2",
             input: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline",
-            error: "block text-sm font-bold text-error my-2 h-5"
+            error: "block text-sm font-bold text-error my-2 h-5",
+            passwordContainer: "flex items-center relative",
+            showHideBtn: "absolute right-0 pr-2.5"
         },
         regex: {
             nameValidation: /^[A-Za-z]+(?:\s[A-Za-z]+)*$/,
@@ -108,28 +110,32 @@ export default function RegistrationForm() {
             <p className={`${formAttributes.css.error} ${errors.email ? "visible" : "invisible"}`}>{errors.email && errors.email.message}</p>
 
             <label className={formAttributes.css.label} htmlFor={formAttributes.id.password}>Password</label>
-            <input 
-              className={formAttributes.css.input} 
-              id={formAttributes.id.password} 
-              type="password"
-              placeholder="Password"
-              {...register("password", {
-                required: {
-                    value: true,
-                    message: "Please enter a password"
-                },
-                pattern: {
-                    value: formAttributes.regex.passwordValidation,
-                    message: "Please enter a valid password"
-                },
-                minLength: {
-                    value: 10,
-                    message: "Password must be at least 10 characters"
-                }
-              })}
-            />
-            <TextToggleButton label="Show Password"/>
+            <div className={formAttributes.css.passwordContainer}>
+                <input 
+                    className={formAttributes.css.input} 
+                    id={formAttributes.id.password} 
+                    type="password"
+                    placeholder="Password"
+                    {...register("password", {
+                        required: {
+                            value: true,
+                            message: "Please enter a password"
+                        },
+                        pattern: {
+                            value: formAttributes.regex.passwordValidation,
+                            message: "Please enter a valid password"
+                        },
+                        minLength: {
+                            value: 10,
+                            message: "Password must be at least 10 characters"
+                        }
+                    })}
+                />
+                <TextToggleButton className={formAttributes.css.showHideBtn} /> 
+            </div>
+           
             <p className={`${formAttributes.css.error} ${errors.password ? "visible" : "invisible"}`}>{errors?.password && errors.password.message}</p>
+
 
             <label className={formAttributes.css.label} htmlFor={formAttributes.id.pwordCon}>Confirm Password</label>
             <input 

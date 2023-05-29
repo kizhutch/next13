@@ -4,12 +4,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 
 const TextLabelButton = ({
-    label,
+    className = "",
     onClick,
     type = "button",
     width = ""
 } : {
-    label: string,
+    className?: string,
     onClick?: React.MouseEventHandler<HTMLButtonElement>,
     type?: React.ButtonHTMLAttributes<HTMLButtonElement>['type'],
     width?: string
@@ -23,7 +23,7 @@ const TextLabelButton = ({
     }
 
     return (
-        <button type={type} role="toggle" onClick={handleClick}>
+        <button className={className} type={type} role="toggle" onClick={handleClick}>
             {isToggled ? <FontAwesomeIcon icon={faEye} /> : <FontAwesomeIcon icon={faEyeSlash} />}
         </button>
     )
