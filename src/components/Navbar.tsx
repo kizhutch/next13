@@ -1,5 +1,5 @@
-import LogInButton from "./buttons/LogInButton"
-import SignUpButton from "./buttons/SignUpButton"
+import LoginLink from "./links/LoginLink"
+import RegisterLink from "./links/RegisterLink"
 
 
 const Navbar = () => {
@@ -12,8 +12,8 @@ const Navbar = () => {
 
     const unAuthenticatedNav = (
         <>
-          <LogInButton />
-          <SignUpButton />
+          <LoginLink />
+          <RegisterLink />
         </>
     )
     return (
