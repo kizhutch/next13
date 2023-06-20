@@ -2,7 +2,7 @@
 
 import Button from "./Button"
 
-const SignUpButton = () => {
+const RegisterButton = () => {
   const onClick = () => {
     alert('clicked sign up');
 
@@ -12,4 +12,4 @@ const SignUpButton = () => {
   )
 }
 
-export default SignUpButton;
+export default RegisterButton;
