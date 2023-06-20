@@ -1,4 +1,4 @@
-import LogInButton from "./buttons/LogInButton"
+import LoginLink from "./links/LoginLink"
 import RegisterLink from "./links/RegisterLink"
 
 
@@ -12,7 +12,7 @@ const Navbar = () => {
 
     const unAuthenticatedNav = (
         <>
-          <LogInButton />
+          <LoginLink />
           <RegisterLink />
         </>
     )
